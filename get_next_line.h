@@ -6,17 +6,17 @@
 /*   By: iecharak <iecharak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 21:13:03 by iecharak          #+#    #+#             */
-/*   Updated: 2022/11/24 19:13:50 by iecharak         ###   ########.fr       */
+/*   Updated: 2022/11/24 19:41:16 by iecharak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# ifndef BUFER_SIZE
-#  define BUFER_SIZE 10
-
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
 # endif
+
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>

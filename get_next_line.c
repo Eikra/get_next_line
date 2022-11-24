@@ -6,7 +6,7 @@
 /*   By: iecharak <iecharak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 21:12:46 by iecharak          #+#    #+#             */
-/*   Updated: 2022/11/24 18:46:05 by iecharak         ###   ########.fr       */
+/*   Updated: 2022/11/24 20:10:16 by iecharak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ char	*get_next_line(int fd)
 	static char	*str;
 
 	line = NULL;
-	if (fd < 0 || BUFER_SIZE <= 0 || read(fd, line, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, line, 0) < 0)
 		return (NULL);
 	str = ft_read_add_to_str(str, fd);
 	if (str == NULL)
 		return (NULL);
+	// printf("<%s> \n", str);
 	line = ft_str_to_line(str);
+	printf("<%s> \n", line);
 	str = ft_clean_str(str);
+	//printf("<%s> \n", str);
 	return (line);
 }
 
@@ -34,13 +37,13 @@ char	*ft_read_add_to_str(char *str, int fd)
 	char	*buffer;
 
 	readed = 1;
-	buffer = malloc(BUFER_SIZE + 1);
+	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
 	while (ft_strchr(str, '\n') == 0 && readed > 0)
 	{
 		//printf("{%s|", str);
-		readed = read(fd, buffer, BUFER_SIZE);
+		readed = read(fd, buffer, BUFFER_SIZE);
 		//printf("readed:%d|", readed);
 		if (readed <= 0)
 			break ;
@@ -93,12 +96,11 @@ char	*ft_str_to_line(char *str)
 	i = 0;
 	if (!str)
 		return (NULL);
-	if (str[0] == '\n')
-		return ("\n");
-	while (str[i] != '\n' && str[i + 1] == '\n' && str[i] != '\0')
+	while (str[i] != '\n' && str[i] != '\0')
 		i++;
 	if (str[i] == '\n')
 		i++;
+	// printf("<%d> ", (i + 1));
 	line = malloc(sizeof(char) * (i + 1));
 	if (!line)
 		return (NULL);
@@ -116,9 +118,9 @@ char	*ft_str_to_line(char *str)
 
 char	*ft_clean_str(char *str)
 {
-	char	*current;
-	int		i;
-	int		j;
+	char *current;
+	int i;
+	int j;
 
 	i = 0;
 	if (!str)
@@ -154,20 +156,3 @@ char	*ft_clean_str(char *str)
 	free(str);
 	return (current);
 }
-
-// int	main(void)
-// {
-// 	int	fd;
-
-// 	fd = open("text.txt", O_RDONLY);
-// 	// get_next_line(fd);
-// 	// get_next_line(fd);
-// 	// get_next_line(fd);
-// 	// get_next_line(fd);
-// 	// get_next_line(fd);
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// }

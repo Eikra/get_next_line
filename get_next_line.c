@@ -6,7 +6,7 @@
 /*   By: iecharak <iecharak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 21:12:46 by iecharak          #+#    #+#             */
-/*   Updated: 2022/11/24 20:10:16 by iecharak         ###   ########.fr       */
+/*   Updated: 2022/11/24 23:12:21 by iecharak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@ char	*get_next_line(int fd)
 	static char	*str;
 
 	line = NULL;
+	//printf("tst");
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, line, 0) < 0)
 		return (NULL);
 	str = ft_read_add_to_str(str, fd);
 	if (str == NULL)
 		return (NULL);
-	// printf("<%s> \n", str);
+	// printf("<str:%s> \n", str);
 	line = ft_str_to_line(str);
-	printf("<%s> \n", line);
+	// printf("<line:%s> \n", line);
 	str = ft_clean_str(str);
 	//printf("<%s> \n", str);
 	return (line);
@@ -64,8 +65,7 @@ char	*add_to_str(char *str, char *buffer, int readed)
 
 	i = 0;
 	j = 0;
-	if (!readed)
-		return (NULL);
+	//printf("<%s|", str);
 	while (str && str[i])
 		i++;
 	s = malloc(sizeof(char) * (i + readed + 1));
@@ -84,6 +84,8 @@ char	*add_to_str(char *str, char *buffer, int readed)
 		j++;
 	}
 	s[j] = '\0';
+	//printf("%s>\n", s);
+	//printf("<str %s\tbuff %s\ts %s>\n ", str, buffer,s);
 	free(str);
 	return (s);
 }
@@ -122,6 +124,7 @@ char	*ft_clean_str(char *str)
 	int i;
 	int j;
 
+	//printf("<%s", str);
 	i = 0;
 	if (!str)
 		return (NULL);
@@ -132,7 +135,10 @@ char	*ft_clean_str(char *str)
 		{
 			i++;
 			if (str[i] == '\n')
+			{
 				i++;
+				break ;
+			}
 		}
 	if (str[i] == '\0')
 	{
@@ -154,5 +160,6 @@ char	*ft_clean_str(char *str)
 	}
 	current[j] = '\0';
 	free(str);
+	//printf("|%s>", current);
 	return (current);
 }

@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iecharak <iecharak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 21:12:46 by iecharak          #+#    #+#             */
-/*   Updated: 2022/11/27 00:57:32 by iecharak         ###   ########.fr       */
+/*   Created: 2022/11/26 19:21:37 by iecharak          #+#    #+#             */
+/*   Updated: 2022/11/27 00:40:51 by iecharak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*str;
+	static char	*str[OPEN_MAX];
 
 	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, line, 0) < 0)
 		return (NULL);
-	str = ft_read_add_to_str(str, fd);
-	if (!str)
+	str[fd] = ft_read_add_to_str(str[fd], fd);
+	if (str[fd] == NULL)
 		return (NULL);
-	line = ft_str_to_line(str);
-	str = ft_clean_str(str);
+	line = ft_str_to_line(str[fd]);
+	str[fd] = ft_clean_str(str[fd]);
 	return (line);
 }
 
@@ -82,6 +82,8 @@ char	*ft_str_to_line(char *str)
 	int		i;
 
 	i = 0;
+	if (!str)
+		return (NULL);
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
 	if (str[i] == '\n')
@@ -107,8 +109,6 @@ char	*ft_clean_str(char *str)
 	int		i;
 
 	i = 0;
-	if (!str)
-		return (NULL);
 	while (str[i] && str[i] != '\n')
 		i++;
 	if (str[i] == '\n')

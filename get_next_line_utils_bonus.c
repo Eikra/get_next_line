@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iecharak <iecharak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/19 17:12:36 by iecharak          #+#    #+#             */
-/*   Updated: 2022/11/26 16:22:21 by iecharak         ###   ########.fr       */
+/*   Created: 2022/11/26 19:22:38 by iecharak          #+#    #+#             */
+/*   Updated: 2022/11/27 00:41:30 by iecharak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (len);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr( char *s, int c)
 {
 	while (s && *s)
 	{
@@ -46,4 +46,18 @@ char	*ft_memcpy(char *dst, char *src, int index)
 	}
 	dst[i] = '\0';
 	return (dst);
+}
+
+char	**ft_free(char **s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		free(s[i]);
+		i--;
+	}
+	free(s);
+	return (NULL);
 }
